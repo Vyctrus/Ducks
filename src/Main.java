@@ -1,5 +1,8 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main {
@@ -11,7 +14,7 @@ public class Main {
         int rowSize=0;
 
         try{
-            File myObj = new File("name_file.txt");
+            File myObj = new File("name_file.csv");
             Scanner myReader = new Scanner(myObj);
             if(myReader.hasNextLine()){
                 duckNumber= myReader.nextInt();
@@ -27,9 +30,7 @@ public class Main {
                 myReader.nextLine();
             }
             myReader.close();//end function after this loop
-            for(int singleDuck[]: ducks){
-                System.out.println(singleDuck[0]+" "+singleDuck[1]);
-            }
+            printDuckValues(ducks);
             doTheCalculations(ducks,duckNumber, rowSize);
         }catch(FileNotFoundException e){
             System.out.println("An error occured");
@@ -71,9 +72,36 @@ public class Main {
         }
         System.out.println("Best sum is : "+bestSumHeights);
         System.out.println("Mask is : "+bestMask);
+
+        //only for tests
+        //calculatePseudoOptimal(ducks,duckNumber,rowSize);//45
     }
 
+    public static void calculatePseudoOptimal(int ducks[][], int duckNumber, int rowSize){
+        ArrayList<Duck> tempTab= new ArrayList<Duck>(duckNumber);
+        for(int i=0;i<duckNumber;i++){
+            tempTab.add(new Duck(ducks[i][0],ducks[i][1],i));
+        }
+        Collections.sort(tempTab);
+        int tempSum=0;
+        int tempLength=0;
+        ArrayList<Integer> indexes=new ArrayList<Integer>();
+        for(int j=0;j<duckNumber;j++){
+            if(tempLength+tempTab.get(j).weight<rowSize){
+                tempSum+=tempTab.get(j).height;
+                tempLength+=tempTab.get(j).weight;
+                indexes.add(tempTab.get(j).startingIndex);
+            }
+        }
+        System.out.println("Pseudo optimal sum is : "+tempSum);
+        System.out.println(indexes);
+    }
 
+    public static void printDuckValues(int ducks[][]){
+        for(int singleDuck[]: ducks){
+            System.out.println(singleDuck[0]+" "+singleDuck[1]);
+        }
+    }
 
     public static void main(String[] args) {
         readExcelData();//brut force ;/
