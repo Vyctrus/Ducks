@@ -8,7 +8,6 @@ import java.util.Scanner;
 public class Main {
 
     public static void readExcelData(){
-        System.out.println("Hello");
         int duckNumber=0;
         int[][] ducks;
         int rowSize=0;
@@ -30,7 +29,7 @@ public class Main {
                 myReader.nextLine();
             }
             myReader.close();//end function after this loop
-            printDuckValues(ducks);
+            //printDuckValues(ducks);
             doTheCalculations(ducks,duckNumber, rowSize);
         }catch(FileNotFoundException e){
             System.out.println("An error occured");
@@ -70,9 +69,9 @@ public class Main {
 
             mask++;
         }
-        System.out.println("Best sum is : "+bestSumHeights);
-        System.out.println("Mask is : "+bestMask);
-
+        //System.out.println("Best sum is : "+bestSumHeights);
+        //System.out.println("Mask is : "+bestMask);
+        System.out.println(bestSumHeights);
         //only for tests
         //calculatePseudoOptimal(ducks,duckNumber,rowSize);//45
     }
